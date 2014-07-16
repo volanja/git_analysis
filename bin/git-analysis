@@ -1,0 +1,19 @@
+#! /usr/bin/env ruby
+# coding: utf-8
+
+require 'git_analysis'
+require 'rubygems'
+require 'thor'
+
+class Cli < Thor
+
+  desc "version", "show version"
+  def version
+    puts GitAnalysis::VERSION
+  end
+
+end
+
+Cli.start
+
+exit 0
