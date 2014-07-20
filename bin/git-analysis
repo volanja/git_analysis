@@ -7,6 +7,11 @@ require 'thor'
 
 class Cli < Thor
 
+  desc "generate", "generate log"
+  def generate
+    GitAnalysis.generate
+  end
+
   desc "version", "show version"
   def version
     puts GitAnalysis::VERSION
