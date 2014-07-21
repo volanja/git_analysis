@@ -11,7 +11,7 @@ module GitAnalysis
       puts 'Directory Not Found. (./.git/stats)'
       #exit 1
     end
-    repo = Rugged::Repository.new(Dir::pwd)
+    repo = load_repo()
     commits = repo.walk(repo.last_commit).to_a
     list = Hash.new
     commits.each do |c|
@@ -27,6 +27,15 @@ module GitAnalysis
     pp list
   end
 
+
   # 以降はプライベートメソッド
   private
+
+  def self.load_repo()
+    repo ||= Rugged::Repository.new(Dir::pwd)
+  rescue Rugged::RepositoryError, Rugged::OSError
+    p 'Rugged::RepositoryError or Rugged::OSError'
+    exit 1
+  end
+
 end
