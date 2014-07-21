@@ -1,5 +1,5 @@
 require "git_analysis/version"
-require "git"
+require "rugged"
 require "fileutils"
 require "pp"
 
@@ -9,22 +9,21 @@ module GitAnalysis
   def self.generate()
     if Dir.glob("./.git/stats").count == 0
       puts 'Directory Not Found. (./.git/stats)'
-      exit 1
+      #exit 1
     end
-    g = Git.open(Dir::pwd)
-    p g.config('remote.origin.url')
-    # Get Commit Infomation
+    repo = Rugged::Repository.new(Dir::pwd)
+    commits = repo.walk(repo.last_commit).to_a
     list = Hash.new
-    g.log.each {|l|
+    commits.each do |c|
       log = Hash.new
-      log["sha"] = l.sha
-      log["date"] = l.author.date
-      log["email"] = l.author.email
-      log["name"] = l.author.name
-      log["mesagge"] = l.message
-
-      list["#{l.sha}"] = log
-    }
+      #pp c.inspect
+      log[:sha] = c.oid
+      log[:message] = c.message
+      log[:time] =  c.time
+      log[:name] = c.author[:name]
+      log[:email] = c.author[:email]
+      list["#{c.oid}"] = log
+    end
     pp list
   end
 

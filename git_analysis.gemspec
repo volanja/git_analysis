@@ -22,9 +22,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 10.3', '>= 10.3.2'
   spec.add_development_dependency 'thor', '~> 0.19', '>= 0.19.1'
   spec.add_development_dependency 'ruport', '~> 1.6', '>= 1.6.3'
-  spec.add_development_dependency 'git', '~> 1.2', '>= 1.2.7'
+  spec.add_development_dependency 'rugged', '~> 0.21', '>= 0.21.0'
 
   spec.add_runtime_dependency 'thor', '~> 0.19', '>= 0.19.1'
   spec.add_runtime_dependency 'ruport', '~> 1.6', '>= 1.6.3'
-  spec.add_runtime_dependency 'git', '~> 1.2', '>= 1.2.7'
+  spec.add_runtime_dependency 'rugged', '~> 0.21', '>= 0.21.0'
 end
