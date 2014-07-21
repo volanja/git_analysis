@@ -8,6 +8,12 @@ Install it yourself as:
 
     $ gem install git_analysis
 
+
+Tested
+```
+ruby 2.0.0p353
+```
+
 ## Usage
 
 ```
