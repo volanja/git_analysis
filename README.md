@@ -19,9 +19,9 @@ Commands:
 
 ### Count E-mail Domain
 
-(v0.0.1 is this mode only)
-Count Author's Email Domain. In order to investigate the companies that are participating in this project.
-If most domain is "gmail", this project is developed by private developers.
+(v0.0.1 is this mode only)  
+Count Author's Email Domain. In order to investigate the companies that are participating in this project.  
+If most domain is "gmail", this project is developed by private developers.  
 
 ```sample
 $ git clone git@github.com:volanja/git_analysis.git
