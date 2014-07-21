@@ -2,31 +2,43 @@ require "git_analysis/version"
 require "rugged"
 require "fileutils"
 require "pp"
+require "oj"
 
 module GitAnalysis
 
-  # generate git log tog .git/stats/log
-  def self.generate()
-    if Dir.glob("./.git/stats").count == 0
-      puts 'Directory Not Found. (./.git/stats)'
-      #exit 1
+  # count domain
+  def self.count_domain()
+    repo = load_repo()
+    commits = repo.walk(repo.last_commit).to_a
+    domain = Array.new
+    commits.each do |c|
+      domain << c.author[:email].match(/([a-zA-Z0-9\_\-\.]+$)/)
     end
+    count = Hash.new(0)
+    domain.each do |elem|
+      count[elem] += 1
+    end
+    puts Oj.dump(count, :mode => :compat)
+  end
+
+  # export
+  def self.export()
     repo = load_repo()
     commits = repo.walk(repo.last_commit).to_a
     list = Hash.new
+    domain = Array.new
     commits.each do |c|
       log = Hash.new
-      #pp c.inspect
       log[:sha] = c.oid
       log[:message] = c.message
       log[:time] =  c.time
       log[:name] = c.author[:name]
       log[:email] = c.author[:email]
+      log[:domain] = c.author[:email].match(/([a-zA-Z0-9\_\-\.]+$)/)[1]
       list["#{c.oid}"] = log
     end
-    pp list
+    puts Oj.dump(list, :mode => :compat)
   end
-
 
   # 以降はプライベートメソッド
   private

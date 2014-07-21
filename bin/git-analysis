@@ -7,10 +7,20 @@ require 'thor'
 
 class Cli < Thor
 
-  desc "generate", "generate log"
-  def generate
-    GitAnalysis.generate
+  desc "count [-d]", "count(email domain only)"
+  option :"domain", :type => :boolean, :aliases => '-d', :desc => "count e-mail domain. export json"
+  def count
+    if options[:domain]
+      GitAnalysis.count_domain
+    else
+      puts "[MUST] Use -d on ver0.0.1"
+    end
   end
+
+  #desc "export", "export"
+  #def export
+  #  GitAnalysis.export
+  #end
 
   desc "version", "show version"
   def version
