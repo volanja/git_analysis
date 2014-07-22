@@ -12,7 +12,7 @@ module GitAnalysis
     commits = repo.walk(repo.last_commit).to_a
     domain = Array.new
     commits.each do |c|
-      domain << c.author[:email].match(/([a-zA-Z0-9\_\-\.]+$)/)
+      domain << c.author[:email].match(/([a-zA-Z0-9\_\-\.]+$)/).to_s.rstrip
     end
     count = Hash.new(0)
     domain.each do |elem|
