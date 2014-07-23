@@ -9,16 +9,15 @@ module GitAnalysis
   # count domain
   def self.count_domain()
     repo = load_repo()
-    domain = Array.new
-    repo.walk(repo.last_commit).each do |commit|
-      # TODO too Slow
-      domain << commit.author[:email].match(/([a-zA-Z0-9\_\-\.]+$)/).to_s.rstrip
-    end
+    #domain = Array.new
     count = Hash.new(0)
-    domain.each do |elem|
-      count[elem] += 1
+    repo.walk(repo.last_commit).each do |commit|
+      # TODO more Faster
+      domain = commit.author[:email].gsub(/\A[a-zA-Z0-9\_\-\. ]+@/,"").rstrip
+      count[:"#{domain}"] += 1
     end
-    puts Oj.dump(count, :mode => :compat)
+    sorted = count.sort_by{|a,b| -b }
+    puts Oj.dump(Hash[sorted], :mode => :compat)
   end
 
   # export
