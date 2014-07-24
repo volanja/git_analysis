@@ -13,7 +13,7 @@ module GitAnalysis
     count = Hash.new(0)
     repo.walk(repo.last_commit).each do |commit|
       # TODO more Faster
-      domain = commit.author[:email].gsub(/\A[a-zA-Z0-9\_\-\. ]+@/,"").rstrip
+      domain = commit.author[:email].gsub(/\A[a-zA-Z0-9\_\-\.\+ ]+@/,"").rstrip
       count[:"#{domain}"] += 1
     end
     sorted = count.sort_by{|a,b| -b }
