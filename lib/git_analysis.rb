@@ -9,15 +9,31 @@ module GitAnalysis
   # count domain
   def self.count_domain()
     repo = load_repo()
-    #domain = Array.new
     count = Hash.new(0)
     repo.walk(repo.last_commit).each do |commit|
       # TODO more Faster
       domain = commit.author[:email].gsub(/\A[a-zA-Z0-9\_\-\.\+ ]+@/,"").rstrip
       count[:"#{domain}"] += 1
+      count[:"total"] += 1
     end
     sorted = count.sort_by{|a,b| -b }
     puts Oj.dump(Hash[sorted], :mode => :compat)
+  end
+
+  def self.count_diff()
+    repo = load_repo()
+    repo.walk(repo.last_commit).each do |commit|
+      sha = String.new
+      sha_parents = String.new
+      sha = commit.oid
+      unless commit.parents[0].nil?
+        sha_parents = commit.parents[0].oid
+        diff_stat = repo.diff(sha_parents,sha).stat
+      else
+        diff_stat = commit.diff.stat
+      end
+      puts "add "+ diff_stat[1].to_s + ", del "+ diff_stat[2].to_s
+    end
   end
 
   # export

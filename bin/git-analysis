@@ -17,6 +17,10 @@ class Cli < Thor
     end
   end
 
+  desc "diff", "p add,p del"
+  def diff
+    GitAnalysis.count_diff
+  end
   #desc "export", "export"
   #def export
   #  GitAnalysis.export

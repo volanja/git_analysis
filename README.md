@@ -38,6 +38,8 @@ $ git-analysis count -d |jq '.'
 }
 ```
 
+total = `git log --pretty=oneline |wc -l`
+
 ## Contributing
 
 1. Fork it ( https://github.com/volanja/git_analysis/fork )
