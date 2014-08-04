@@ -7,20 +7,17 @@ require 'thor'
 
 class Cli < Thor
 
-  desc "count [-d]", "count(email domain only)"
+  desc "count [-d][-l]", "count. email-domain or line. please run `git-analysis help count`)"
   option :"domain", :type => :boolean, :aliases => '-d', :desc => "count e-mail domain. export json"
+  option :"line", :type => :boolean, :aliases => '-l', :desc => "count insertion & deletion"
   def count
     if options[:domain]
       GitAnalysis.count_domain
-    else
-      puts "[MUST] Use -d on ver0.0.1"
+    elsif options[:line]
+      GitAnalysis.count_diff
     end
   end
 
-  desc "diff", "p add,p del"
-  def diff
-    GitAnalysis.count_diff
-  end
   #desc "export", "export"
   #def export
   #  GitAnalysis.export

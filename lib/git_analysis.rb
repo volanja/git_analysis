@@ -22,18 +22,20 @@ module GitAnalysis
 
   def self.count_diff()
     repo = load_repo()
+    count = Hash.new{|h,k| h[k] = Hash.new(0) }
     repo.walk(repo.last_commit).each do |commit|
-      sha = String.new
-      sha_parents = String.new
-      sha = commit.oid
-      unless commit.parents[0].nil?
-        sha_parents = commit.parents[0].oid
-        diff_stat = repo.diff(sha_parents,sha).stat
-      else
-        diff_stat = commit.diff.stat
-      end
-      puts "add "+ diff_stat[1].to_s + ", del "+ diff_stat[2].to_s
+      domain = commit.author[:email].gsub(/\A[a-zA-Z0-9\_\-\.\+ ]+@/,"").rstrip
+      diff = commit_diff(repo, commit)
+
+      count[:"#{domain}"][:"addition"] += diff[1].to_i
+      count[:"#{domain}"][:"deletion"] += diff[2].to_i
+
+      count[:"total"][:"addition"] += diff[1].to_i
+      count[:"total"][:"deletion"] += diff[2].to_i
     end
+    # TODO more Faster! it takes 50 sec(10k / sec).
+    sorted = count.sort_by{|a,b| -b[:"addition"] }
+    puts Oj.dump(Hash[sorted], :mode => :compat)
   end
 
   # export
@@ -63,6 +65,23 @@ module GitAnalysis
   rescue Rugged::RepositoryError, Rugged::OSError
     p 'Rugged::RepositoryError or Rugged::OSError'
     exit 1
+  end
+
+  def self.commit_diff(repo,commit)
+    sha = String.new
+    sha_parents = String.new
+    diff_stat = Array.new
+
+    sha = commit.oid
+    unless commit.parents[0].nil?
+      sha_parents = commit.parents[0].oid
+      # Too Slow. More Faster
+      diff_stat = repo.diff(sha_parents,sha).stat
+    else
+      tmp = commit.diff.stat
+      diff_stat = [tmp[0], tmp[2], tmp[1]]
+    end
+    return diff_stat
   end
 
 end
