@@ -10,14 +10,23 @@ module GitAnalysis
   def self.count_domain()
     repo = load_repo()
     count = Hash.new(0)
+    total = 0
     repo.walk(repo.last_commit).each do |commit|
       # TODO more Faster
       domain = commit.author[:email].gsub(/\A[a-zA-Z0-9\_\-\.\+ ]+@/,"").rstrip
       count[:"#{domain}"] += 1
-      count[:"total"] += 1
+      total += 1
     end
     sorted = count.sort_by{|a,b| -b }
-    puts Oj.dump(Hash[sorted], :mode => :compat)
+    info = Hash.new
+    result = Hash.new
+    result[:'count'] = Hash.new
+    result[:'count'] = Hash[sorted]
+    info[:'last_commit_oid'] = repo.last_commit.oid
+    info[:'last_commit_date'] = repo.last_commit.time.to_s
+    info[:'total_commit'] = total
+    result[:'infomation'] = info
+    puts Oj.dump(result, :mode => :compat)
   end
 
   def self.count_diff()

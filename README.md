@@ -34,8 +34,14 @@ $ cd git_analysis
 
 $ git-analysis count -d |jq '.'
 {
-  "total": 5,
-  "gmail.com": 5
+  "count": {
+    "gmail.com": 14
+  },
+  "infomation": {
+    "last_commit_oid": "7bf2839121b1940c4999b187cd5717f9e94a4a85",
+    "last_commit_date": "2014-08-04 23:55:25 +0900",
+    "total_commit": 14
+  }
 }
 ```
 
