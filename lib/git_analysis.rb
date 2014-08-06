@@ -13,7 +13,7 @@ module GitAnalysis
     total = 0
     repo.walk(repo.last_commit).each do |commit|
       # TODO more Faster
-      domain = commit.author[:email].gsub(/\A[a-zA-Z0-9\_\-\.\+ ]+@/,"").rstrip
+      domain = commit.author[:email].gsub(/\A[a-zA-Z0-9\_\-\.\+ \,\@]+@/,"").rstrip
       count[:"#{domain}"] += 1
       total += 1
     end
@@ -37,7 +37,7 @@ module GitAnalysis
     count = Hash.new{|h,k| h[k] = Hash.new(0) }
     total = Hash.new(0)
     repo.walk(repo.last_commit).each do |commit|
-      domain = commit.author[:email].gsub(/\A[a-zA-Z0-9\_\-\.\+ ]+@/,"").rstrip
+      domain = commit.author[:email].gsub(/\A[a-zA-Z0-9\_\-\.\+ \,\@]+@/,"").rstrip
       diff = commit_diff(repo, commit)
 
       count[:"#{domain}"][:"addition"] += diff[1].to_i
