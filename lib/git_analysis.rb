@@ -7,7 +7,7 @@ require "oj"
 module GitAnalysis
 
   # count domain
-  def self.count_domain()
+  def self.count_domain(number=0)
     repo = load_repo()
     count = Hash.new(0)
     total = 0
@@ -17,21 +17,25 @@ module GitAnalysis
       count[:"#{domain}"] += 1
       total += 1
     end
-    sorted = count.sort_by{|a,b| -b }
-    info = Hash.new
+    if number.nil?
+      sorted = count.sort_by{|a,b| -b }
+    else
+      sorted = count.sort_by{|a,b| -b }.first(number)
+      sum =0
+      sorted.each{|c| sum += c[1] } 
+      sorted << [:others, total - sum] 
+    end
     result = Hash.new
     result[:'count'] = Hash.new
     result[:'count'] = Hash[sorted]
-    info[:'last_commit_oid'] = repo.last_commit.oid
-    info[:'last_commit_date'] = repo.last_commit.time.to_s
-    info[:'total_commit'] = total
-    result[:'infomation'] = info
+    result[:'infomation'] = get_info(repo,total)
     puts Oj.dump(result, :mode => :compat)
   end
 
-  def self.count_diff()
+  def self.count_diff(number=0)
     repo = load_repo()
     count = Hash.new{|h,k| h[k] = Hash.new(0) }
+    total = Hash.new(0)
     repo.walk(repo.last_commit).each do |commit|
       domain = commit.author[:email].gsub(/\A[a-zA-Z0-9\_\-\.\+ ]+@/,"").rstrip
       diff = commit_diff(repo, commit)
@@ -39,12 +43,29 @@ module GitAnalysis
       count[:"#{domain}"][:"addition"] += diff[1].to_i
       count[:"#{domain}"][:"deletion"] += diff[2].to_i
 
-      count[:"total"][:"addition"] += diff[1].to_i
-      count[:"total"][:"deletion"] += diff[2].to_i
+      total[:"addition"] += diff[1].to_i
+      total[:"deletion"] += diff[2].to_i
     end
-    # TODO more Faster! it takes 50 sec(10k / sec).
-    sorted = count.sort_by{|a,b| -b[:"addition"] }
-    puts Oj.dump(Hash[sorted], :mode => :compat)
+    if number.nil?
+      # TODO more Faster! it takes 50 sec(10k / sec).
+      sorted = count.sort_by{|a,b| -b[:"addition"] }
+    else
+      sorted = count.sort_by{|a,b| -b[:"addition"] }.first(number)
+      sum = Hash.new(0)
+      sorted.each{|c|
+        sum["addition"] += c[1][:"addition"]
+        sum["deletion"] += c[1][:"deletion"]
+      }
+      tmp = Hash.new(0)
+      tmp[:"addition"] = total[:"addition"] - sum["addition"]
+      tmp[:"deletion"] = total[:"deletion"] - sum["deletion"]
+      sorted << [:"others",tmp]
+    end
+    result = Hash.new
+    result[:'count'] = Hash.new
+    result[:'count'] = Hash[sorted]
+    result[:'infomation'] = get_info(repo,total)
+    puts Oj.dump(result, :mode => :compat)
   end
 
   # export
@@ -93,4 +114,11 @@ module GitAnalysis
     return diff_stat
   end
 
+  def self.get_info(repo,total)
+    info = Hash.new
+    info[:'last_commit_oid'] = repo.last_commit.oid
+    info[:'last_commit_date'] = repo.last_commit.time.to_s
+    info[:'total_commit'] = total
+    return info
+  end
 end
