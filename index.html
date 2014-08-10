@@ -26,6 +26,8 @@
     parseGitAnalysis_count("json/kibana.json", "Kibana (Commit)", "kibana");
     parseGitAnalysis_count("json/norikra.json", "Norikra (Commit)", "norikra");
     parseGitAnalysis_count("json/jquery.json", "jQuery (Commit)", "jquery");
+    parseGitAnalysis_count("json/fluentd.json", "fluentd (Commit)", "fluentd");
+    parseGitAnalysis_count("json/serverspec.json", "Serverspec (Commit)", "serverspec");
   };
 
 </script>
@@ -58,12 +60,28 @@
       <div id="kibana"></div>
     </div>
   </div>
+
+  <div class="row">
+    <h1>Test Tools</h1>
+    <div class="col-md-6">
+      <div id="serverspec"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <h1>Log Collector</h1>
+    <div class="col-md-6">
+      <div id="fluentd"></div>
+    </div>
+  </div>
+
   <div class="row">
     <h1>Stream Processing Server</h1>
     <div class="col-md-6">
       <div id="norikra"></div>
     </div>
   </div>
+
   <div class="row">
     <h1>JavaScript Library</h1>
     <div class="col-md-6">
