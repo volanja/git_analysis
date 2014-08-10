@@ -2,4 +2,5 @@
 //= require raphael-min
 //= require g.raphael-min
 //= require g.pie-min
+//= require git_analysis
 //= require_tree .
