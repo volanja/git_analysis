@@ -30,4 +30,4 @@ after_success:
     # /home/travis/build/volanja/gh-pages
     - git add .
     - git commit -a -m 'Update by travis'
-    - '[ $GH_TOKEN ] && git push --quiet https://$GH_TOKEN@github.com/volanja/git_analysis.git gh-pages 2> /dev/null' 
+    - '[ $GH_TOKEN ] && git push --quiet https://$GH_TOKEN@github.com/volanja/git_analysis.git gh-pages' 
