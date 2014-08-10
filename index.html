@@ -16,29 +16,56 @@
   </head>
   
   <body class="index">
-        <script>
-      window.onload = function () {
-        parseGitAnalysis_count("json/chef.json", "Chef (Commit , master)", "chef");
-        parseGitAnalysis_count("json/ansible.json", "Ansible (Commit , master)", "ansible");
-        parseGitAnalysis_count("json/riak.json", "Riak (Commit , master)", "riak");
-        parseGitAnalysis_count("json/mongo.json", "Mongo (Commit , master)", "mongo");
-        parseGitAnalysis_count("json/elasticsearch.json", "elasticsearch (Commit , master)", "elasticsearch");
-        parseGitAnalysis_count("json/kibana.json", "Kibana (Commit , master)", "kibana");
-        parseGitAnalysis_count("json/norikra.json", "Norikra (Commit , master)", "norikra");
-        parseGitAnalysis_count("json/jquery.json", "jQuery (Commit , master)", "jquery");
-      };
+    <script>
+  window.onload = function () {
+    parseGitAnalysis_count("json/chef.json", "Chef (Commit)", "chef");
+    parseGitAnalysis_count("json/ansible.json", "Ansible (Commit)", "ansible");
+    parseGitAnalysis_count("json/riak.json", "Riak (Commit)", "riak");
+    parseGitAnalysis_count("json/mongo.json", "Mongo (Commit)", "mongo");
+    parseGitAnalysis_count("json/elasticsearch.json", "elasticsearch (Commit)", "elasticsearch");
+    parseGitAnalysis_count("json/kibana.json", "Kibana (Commit)", "kibana");
+    parseGitAnalysis_count("json/norikra.json", "Norikra (Commit)", "norikra");
+    parseGitAnalysis_count("json/jquery.json", "jQuery (Commit)", "jquery");
+  };
 
-    </script>
-    <div class="container">
-    <div id="chef"></div>
-    <div id="ansible"></div>
-    <div id="riak"></div>
-    <div id="mongo"></div>
-    <div id="elasticsearch"></div>
-    <div id="riak"></div>
-    <div id="norikra"></div>
-    <div id="jquery"></div>
-    </div> <!-- container -->
+</script>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div id="chef"></div>
+    </div>
+    <div class="col-md-6">
+      <div id="ansible"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div id="riak"></div>
+    </div>
+    <div class="col-md-6">
+      <div id="mongo"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="elasticsearch"></div>
+    </div>
+    <div class="col-md-6">
+      <div id="kibana"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="norikra"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="jquery"></div>
+    </div>
+  </div>
+</div> <!-- container -->
 
   </body>
 </html>

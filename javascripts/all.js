@@ -9267,7 +9267,7 @@ m[e].label=a.labels[e];g+=1.2*r.getBBox().height}f=a.labels.getBBox();a.labels.t
      */
     function pie(data,label, title, div_id){
           var r = Raphael(div_id),
-          pie = r.piechart(320, 240, 100, data, 
+          pie = r.piechart(130, 240, 100, data, 
             { legend: label,
               legendpos: "east"
             }
