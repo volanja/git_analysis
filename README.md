@@ -1,4 +1,5 @@
 # GitAnalysis
+[![Gem Version](https://badge.fury.io/rb/git_analysis.svg)](http://badge.fury.io/rb/git_analysis)
 
 Analysis Git-Project
 
