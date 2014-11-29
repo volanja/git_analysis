@@ -18,6 +18,8 @@
   <body class="index">
     <script>
   window.onload = function () {
+    parseGitAnalysis_count("json/ansible_d_v1.4.1.json", "Ansible (Commit 2013/12/01 v1.4.1)", "ansible_d_v1.4.1");
+    parseGitAnalysis_count("json/ansible_d_v1.8.1.json", "Ansible (Commit 2014/12/01 v1.8.1)", "ansible_d_v1.8.1");
     parseGitAnalysis_count("json/chef.json", "Chef (Commit)", "chef");
     parseGitAnalysis_count("json/ansible.json", "Ansible (Commit)", "ansible");
     parseGitAnalysis_count("json/riak.json", "Riak (Commit)", "riak");
@@ -32,6 +34,15 @@
 
 </script>
 <div class="container">
+  <div class="row">
+    <h1>Anbile Changes (2013/12/01 v1.4.1 to 2014/12/01 v1.8.1)</h1>
+    <div class="col-md-6">
+      <div id="ansible_d_v1.4.1"></div>
+    </div>
+    <div class="col-md-6">
+      <div id="ansible_d_v1.8.1"></div>
+    </div>
+  </div>
   <div class="row">
     <h1>Configuration Management</h1>
     <div class="col-md-6">
